@@ -1,0 +1,78 @@
+HAS(Hammer )
+Login
+  Owner
+  Sub-Owner
+  Employee
+
+Logistic and Metrial
+Task Management
+Projects
+HR Sections
+CRM
+
+
+Login(All three role)
+ 
+   - Home Theater 
+   - Automation
+
+Inquiry(curd opration)
+Fields
+ Inquiry Code
+ Inquiry Type(Home Theater,Automation,both)
+ Type(Reference,Direct)
+ City
+ Region(Rjkot, Ahmedabad,Surat)
+ ClientName
+ Address
+ Comment
+ Quatation (Browse Button , PDF upload)
+
+Projects (Owner,Employee)
+   Search Option (Inqury table in search),Create button(Owner) 
+Fields
+  ClientCode
+  Project Status
+  Stage   -    Wiring   - checklist
+               Acoustik - checkList(Home Theater)
+			   Programming- checkList(Autmation)
+			   installation- checkList
+			   Completation - checkList
+  CheckListId
+  Payment(Comment)
+  Metrial
+  MetrialColor
+  Project Start Date
+  Project Drawing  
+ 
+After Sells (Owner,Sub-Owner)
+ Fields
+  ClientCode
+  Metrial
+  MetrialColor
+  AMC(bit)
+  Warrany(bit)
+  Note
+
+Material Management(Owner,Sub-Owner)
+ create new entry 
+ check stock
+ assgine meterial 
+ 
+Task Management
+ (Owner)
+   Create a new Task
+   Existing Task 
+  
+  Fieds
+    TaskType 
+    ClientCode
+	Task Description
+    Assgine To
+	Start Date
+	Approx End Date
+	End Date
+	Note
+	Done 
+
+   
