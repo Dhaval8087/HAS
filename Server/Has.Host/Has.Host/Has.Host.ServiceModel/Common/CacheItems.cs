@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Has.Host
+namespace Has.Host.ServiceModel.Common
 {
     public class CacheItems
     {

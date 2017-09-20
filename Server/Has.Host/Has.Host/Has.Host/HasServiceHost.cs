@@ -1,9 +1,10 @@
-﻿using Funq;
-using ServiceStack;
+﻿using ServiceStack;
 using Has.Host.ServiceInterface;
 using ServiceStack.Caching;
 using System.Web;
 using System;
+using Has.Host.ServiceModel.Common;
+using Has.Host.ServiceModel;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Has.Host.App_Start.HasServiceHost), "Start")]
 namespace Has.Host.App_Start
@@ -15,7 +16,7 @@ namespace Has.Host.App_Start
         /// Base constructor requires a Name and Assembly where web service implementation is located
         /// </summary>
         public HasServiceHost()
-            : base("Has Service Host", typeof(MyServices).Assembly) { }
+            : base("Has Service Host", typeof(AuthenticationService).Assembly) { }
 
         /// <summary>
         /// Application specific configuration
@@ -29,76 +30,95 @@ namespace Has.Host.App_Start
             ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
             this.PreRequestFilters.Add((req, res) =>
             {
-                var apiKey = req.Headers["x-api-key"];
-                if (apiKey == null || !Clients.VerifyKey(apiKey))
+                if (!req.AbsoluteUri.Contains("metadata"))
                 {
-                    res.StatusCode = 401;
-                    res.Write("Error:" + "Invalid Api-Key");
-                    //HttpResponse httpResponse = res.OriginalResponse as HttpResponse;
-                    //httpResponse.SuppressFormsAuthenticationRedirect = true;
-                    res.End();
-                }
-            });
-            this.PreRequestFilters.Add((req, res) =>
-            {
-                var cacheClient = req.TryResolve<ICacheClient>();
-                string authToken = req.Headers["x-user-id"];
-                var cacheValue = cacheClient.Get<CacheItems>(authToken);
-                Guid guid;
-                Guid.TryParse(authToken, out guid);
-                string responseMessage = string.Empty;
-                bool IsFailure = false;
-                //Checks Whether They Provided Valid AuthToken or not
-                if (guid.ToString().Equals("00000000-0000-0000-0000-000000000000"))
-                {
-                    responseMessage = "Error:Invalid Authentication";
-                    IsFailure = true;
-                }
-                else if (cacheValue != null && authToken != cacheValue.AuthToken)
-                {
-                    responseMessage = "Error:Invalid Authentication";
-                    IsFailure = true;
-                }
-                else if (cacheValue == null)
-                {
-                    /*if (authenticationService.GetByAuthTokenID(new Guid(req.Headers["x-user-id"])) != null)
+                    var apiKey = req.Headers["x-api-key"];
+                    if (apiKey == null || !Clients.VerifyKey(apiKey))
                     {
-                        responseMessage = "Error:AuthToken Expired.please login again.";
+                        res.StatusCode = 401;
+                        res.ContentType = "text/html";
+                        res.Write("Error:" + "Invalid Api-Key");
+                        //HttpResponse httpResponse = res.OriginalResponse as HttpResponse;
+                        //httpResponse.SuppressFormsAuthenticationRedirect = true;
+                        res.End();
                     }
-                    else
+                }
+
+            });
+
+            this.GlobalRequestFilters.Add((req, res, dto) =>
+            {
+                var type = dto.GetType();
+
+                if (!req.AbsoluteUri.Contains("metadata") && (dto.GetType() != typeof(LoginRequest)))
+                {
+
+                    var cacheClient = req.TryResolve<ICacheClient>();
+                    string authToken = req.Headers["x-user-id"];
+                    var cacheValue = cacheClient.Get<CacheItems>(authToken);
+                    Guid guid;
+                    Guid.TryParse(authToken, out guid);
+                    string responseMessage = string.Empty;
+                    bool IsFailure = false;
+                    //Checks Whether They Provided Valid AuthToken or not
+                    if (guid.ToString().Equals("00000000-0000-0000-0000-000000000000"))
                     {
                         responseMessage = "Error:Invalid Authentication";
                         IsFailure = true;
-                    }*/
+                    }
+                    else if (cacheValue != null && authToken != cacheValue.AuthToken)
+                    {
+                        responseMessage = "Error:Invalid Authentication";
+                        IsFailure = true;
+                    }
+                    else if (cacheValue == null)
+                    {
+                        /*if (authenticationService.GetByAuthTokenID(new Guid(req.Headers["x-user-id"])) != null)
+                        {
+                            responseMessage = "Error:AuthToken Expired.please login again.";
+                        }
+                        else
+                        {
+                            responseMessage = "Error:Invalid Authentication";
+                            IsFailure = true;
+                        }*/
+                    }
+                    if (IsFailure)
+                    {
+                        //res.StatusCode = 401;
+                        //res.Write(responseMessage);
+                        var httpResponse = (HttpResponseBase)res.OriginalResponse;
+                        httpResponse.StatusCode = 401;
+                        httpResponse.OutputStream.Write(responseMessage);
+                        httpResponse.SuppressFormsAuthenticationRedirect = true;
+                        res.End();
+                    }
                 }
-                if (IsFailure)
-                {
-                    res.StatusCode = 401;
-                    res.Write(responseMessage);
-                    HttpResponse httpResponse = res.OriginalResponse as HttpResponse;
-                    httpResponse.SuppressFormsAuthenticationRedirect = true;
-                    res.End();
-                }
-            });
-            this.PreRequestFilters.Add((req, res) =>
-            {
-                var cacheClient = req.TryResolve<ICacheClient>();
-                var authToken = req.Headers["x-user-id"];
-                var cacheValue = cacheClient.Get<CacheItems>(authToken);
-                if (cacheValue != null)
-                {
-                    CacheItems cacheItems = new CacheItems { UserType = cacheValue.UserType, AuthToken = cacheValue.AuthToken };
-                    cacheClient.Replace(cacheValue.AuthToken, cacheItems, new TimeSpan(0, 1, 0, 0));
-                }
-                else
-                {
 
-                    res.StatusCode = 401;
-                    res.Write("Error:" + "Session Time Out");
-                    HttpResponse httpResponse = res.OriginalResponse as HttpResponse;
-                    httpResponse.SuppressFormsAuthenticationRedirect = true;
-                    res.End();
+            });
+            this.GlobalResponseFilters.Add((req, res, dto) =>
+            {
+                if (!req.AbsoluteUri.Contains("metadata") && (dto.GetType() != typeof(LoginResponse)))
+                {
+                    var cacheClient = req.TryResolve<ICacheClient>();
+                    var authToken = req.Headers["x-user-id"];
+                    var cacheValue = cacheClient.Get<CacheItems>(authToken);
+                    if (cacheValue != null)
+                    {
+                        CacheItems cacheItems = new CacheItems { UserType = cacheValue.UserType, AuthToken = cacheValue.AuthToken };
+                        cacheClient.Replace(cacheValue.AuthToken, cacheItems, new TimeSpan(0, 1, 0, 0));
+                    }
+                    else
+                    {
+
+                        res.StatusCode = 401;
+                        res.Write("Error:" + "Session Time Out");
+                        HttpResponse httpResponse = res.OriginalResponse as HttpResponse;
+                        httpResponse.SuppressFormsAuthenticationRedirect = true;
+                        res.End();
+                    }
                 }
+
             });
         }
 

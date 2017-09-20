@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\HAS.HOST.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -132,7 +133,6 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\CacheItems.cs" />
     <Compile Include="App_Start\Clients.cs" />
     <Compile Include="App_Start\ClientSection.cs" />
     <Compile Include="HasServiceHost.cs" />
