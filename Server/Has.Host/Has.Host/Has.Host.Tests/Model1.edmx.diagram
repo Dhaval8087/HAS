@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b559912413a94c31b191f4e48eeb5a9b" Name="Diagram1" >
+        <EntityTypeShape EntityType="Model1.Login" Width="1.5" PointX="3.125" PointY="0.875" />
+        <EntityTypeShape EntityType="Model1.Role" Width="1.5" PointX="5.375" PointY="0.75" />
+        <AssociationConnector Association="Model1.RoleLogin" />
+        <EntityTypeShape EntityType="Model1.Inquiry" Width="1.5" PointX="2" PointY="3.25" />
+        <EntityTypeShape EntityType="Model1.Project" Width="1.5" PointX="4" PointY="3.125" />
+        <EntityTypeShape EntityType="Model1.Stages" Width="1.5" PointX="6.75" PointY="3" />
+        <AssociationConnector Association="Model1.StagesProject" />
+        <EntityTypeShape EntityType="Model1.CheckList" Width="1.5" PointX="8.75" PointY="2.25" />
+        <AssociationConnector Association="Model1.StagesCheckList" />
+        <EntityTypeShape EntityType="Model1.ProjectStageCheckList" Width="1.5" PointX="6.625" PointY="5.5" />
+        <AssociationConnector Association="Model1.ProjectProjectStageCheckList" />
+        <AssociationConnector Association="Model1.StagesProjectStageCheckList" />
+        <AssociationConnector Association="Model1.CheckListProjectStageCheckList" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

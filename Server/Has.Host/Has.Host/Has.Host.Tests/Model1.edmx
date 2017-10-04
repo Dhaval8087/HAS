@@ -1,0 +1,488 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Model1StoreContainer">
+    <EntitySet Name="Logins" EntityType="Model1.Store.Logins" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles" EntityType="Model1.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Inquiries" EntityType="Model1.Store.Inquiries" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Projects" EntityType="Model1.Store.Projects" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Stages" EntityType="Model1.Store.Stages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CheckLists" EntityType="Model1.Store.CheckLists" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProjectStageCheckLists" EntityType="Model1.Store.ProjectStageCheckLists" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="RoleLogin" Association="Model1.Store.RoleLogin">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="Login" EntitySet="Logins" />
+    </AssociationSet>
+    <AssociationSet Name="StagesProject" Association="Model1.Store.StagesProject">
+      <End Role="Stages" EntitySet="Stages" />
+      <End Role="Project" EntitySet="Projects" />
+    </AssociationSet>
+    <AssociationSet Name="StagesCheckList" Association="Model1.Store.StagesCheckList">
+      <End Role="Stages" EntitySet="Stages" />
+      <End Role="CheckList" EntitySet="CheckLists" />
+    </AssociationSet>
+    <AssociationSet Name="ProjectProjectStageCheckList" Association="Model1.Store.ProjectProjectStageCheckList">
+      <End Role="Project" EntitySet="Projects" />
+      <End Role="ProjectStageCheckList" EntitySet="ProjectStageCheckLists" />
+    </AssociationSet>
+    <AssociationSet Name="StagesProjectStageCheckList" Association="Model1.Store.StagesProjectStageCheckList">
+      <End Role="Stages" EntitySet="Stages" />
+      <End Role="ProjectStageCheckList" EntitySet="ProjectStageCheckLists" />
+    </AssociationSet>
+    <AssociationSet Name="CheckListProjectStageCheckList" Association="Model1.Store.CheckListProjectStageCheckList">
+      <End Role="CheckList" EntitySet="CheckLists" />
+      <End Role="ProjectStageCheckList" EntitySet="ProjectStageCheckLists" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Logins">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Inquiries">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="InquiryCode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="InquiryType" Type="int" Nullable="false" />
+    <Property Name="City" Type="int" Nullable="false" />
+    <Property Name="Region" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ClientName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Comments" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Quotation" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Projects">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientCode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Stage" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StagesId" Type="int" Nullable="false" />
+    <Property Name="Payment" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Material" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="MaterialColor" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="Drawing" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Stages">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CheckLists">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StagesId" Type="int" Nullable="false" />
+    <Property Name="Item" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectStageCheckLists">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectId" Type="int" Nullable="false" />
+    <Property Name="StagesId" Type="int" Nullable="false" />
+    <Property Name="CheckListId" Type="int" Nullable="false" />
+    <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="RoleLogin">
+    <End Role="Role" Type="Model1.Store.Roles" Multiplicity="1" />
+    <End Role="Login" Type="Model1.Store.Logins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Login">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StagesProject">
+    <End Role="Stages" Type="Model1.Store.Stages" Multiplicity="1" />
+    <End Role="Project" Type="Model1.Store.Projects" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stages">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Project">
+        <PropertyRef Name="StagesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StagesCheckList">
+    <End Role="Stages" Type="Model1.Store.Stages" Multiplicity="1" />
+    <End Role="CheckList" Type="Model1.Store.CheckLists" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stages">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CheckList">
+        <PropertyRef Name="StagesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProjectProjectStageCheckList">
+    <End Role="Project" Type="Model1.Store.Projects" Multiplicity="1" />
+    <End Role="ProjectStageCheckList" Type="Model1.Store.ProjectStageCheckLists" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProjectStageCheckList">
+        <PropertyRef Name="ProjectId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StagesProjectStageCheckList">
+    <End Role="Stages" Type="Model1.Store.Stages" Multiplicity="1" />
+    <End Role="ProjectStageCheckList" Type="Model1.Store.ProjectStageCheckLists" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stages">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProjectStageCheckList">
+        <PropertyRef Name="StagesId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CheckListProjectStageCheckList">
+    <End Role="CheckList" Type="Model1.Store.CheckLists" Multiplicity="1" />
+    <End Role="ProjectStageCheckList" Type="Model1.Store.ProjectStageCheckLists" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CheckList">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProjectStageCheckList">
+        <PropertyRef Name="CheckListId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Model1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Logins" EntityType="Model1.Login" />
+          <EntitySet Name="Roles" EntityType="Model1.Role" />
+          <AssociationSet Name="RoleLogin" Association="Model1.RoleLogin">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Login" EntitySet="Logins" />
+          </AssociationSet>
+          <EntitySet Name="Inquiries" EntityType="Model1.Inquiry" />
+          <EntitySet Name="Projects" EntityType="Model1.Project" />
+          <EntitySet Name="Stages" EntityType="Model1.Stages" />
+          <AssociationSet Name="StagesProject" Association="Model1.StagesProject">
+            <End Role="Stages" EntitySet="Stages" />
+            <End Role="Project" EntitySet="Projects" />
+          </AssociationSet>
+          <EntitySet Name="CheckLists" EntityType="Model1.CheckList" />
+          <AssociationSet Name="StagesCheckList" Association="Model1.StagesCheckList">
+            <End Role="Stages" EntitySet="Stages" />
+            <End Role="CheckList" EntitySet="CheckLists" />
+          </AssociationSet>
+          <EntitySet Name="ProjectStageCheckLists" EntityType="Model1.ProjectStageCheckList" />
+          <AssociationSet Name="ProjectProjectStageCheckList" Association="Model1.ProjectProjectStageCheckList">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="ProjectStageCheckList" EntitySet="ProjectStageCheckLists" />
+          </AssociationSet>
+          <AssociationSet Name="StagesProjectStageCheckList" Association="Model1.StagesProjectStageCheckList">
+            <End Role="Stages" EntitySet="Stages" />
+            <End Role="ProjectStageCheckList" EntitySet="ProjectStageCheckLists" />
+          </AssociationSet>
+          <AssociationSet Name="CheckListProjectStageCheckList" Association="Model1.CheckListProjectStageCheckList">
+            <End Role="CheckList" EntitySet="CheckLists" />
+            <End Role="ProjectStageCheckList" EntitySet="ProjectStageCheckLists" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Model1.RoleLogin" FromRole="Login" ToRole="Role" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Logins" Relationship="Model1.RoleLogin" FromRole="Role" ToRole="Login" />
+        </EntityType>
+        <Association Name="RoleLogin">
+          <End Type="Model1.Role" Role="Role" Multiplicity="1" />
+          <End Type="Model1.Login" Role="Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Inquiry">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InquiryCode" Type="String" Nullable="false" />
+          <Property Name="InquiryType" Nullable="false" Type="Model1.InquiryType" />
+          <Property Name="City" Type="Model1.Type" Nullable="false" />
+          <Property Name="Region" Type="String" Nullable="false" />
+          <Property Name="ClientName" Type="String" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" />
+          <Property Name="Comments" Type="String" Nullable="false" />
+          <Property Name="Quotation" Type="String" Nullable="false" />
+        </EntityType>
+        <EnumType Name="InquiryType">
+          <Member Name="Hometheater" Value="1" />
+          <Member Name="Automation" Value="2" />
+          <Member Name="Both" Value="3" />
+        </EnumType>
+        <EnumType Name="Type">
+          <Member Name="Reference" Value="1" />
+          <Member Name="Direct" Value="2" />
+        </EnumType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientCode" Type="String" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" />
+          <Property Name="Stage" Type="String" Nullable="false" />
+          <NavigationProperty Name="Stage1" Relationship="Model1.StagesProject" FromRole="Project" ToRole="Stages" />
+          <Property Name="StagesId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProjectStageCheckLists" Relationship="Model1.ProjectProjectStageCheckList" FromRole="Project" ToRole="ProjectStageCheckList" />
+          <Property Name="Payment" Type="String" Nullable="false" />
+          <Property Name="Material" Type="String" Nullable="false" />
+          <Property Name="MaterialColor" Type="String" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" />
+          <Property Name="Drawing" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Stages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Projects" Relationship="Model1.StagesProject" FromRole="Stages" ToRole="Project" />
+          <NavigationProperty Name="CheckLists" Relationship="Model1.StagesCheckList" FromRole="Stages" ToRole="CheckList" />
+          <NavigationProperty Name="ProjectStageCheckLists" Relationship="Model1.StagesProjectStageCheckList" FromRole="Stages" ToRole="ProjectStageCheckList" />
+        </EntityType>
+        <Association Name="StagesProject">
+          <End Type="Model1.Stages" Role="Stages" Multiplicity="1" />
+          <End Type="Model1.Project" Role="Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="StagesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CheckList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Stage" Relationship="Model1.StagesCheckList" FromRole="CheckList" ToRole="Stages" />
+          <Property Name="StagesId" Type="Int32" Nullable="false" />
+          <Property Name="Item" Type="String" Nullable="false" />
+          <NavigationProperty Name="ProjectStageCheckLists" Relationship="Model1.CheckListProjectStageCheckList" FromRole="CheckList" ToRole="ProjectStageCheckList" />
+        </EntityType>
+        <Association Name="StagesCheckList">
+          <End Type="Model1.Stages" Role="Stages" Multiplicity="1" />
+          <End Type="Model1.CheckList" Role="CheckList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CheckList">
+              <PropertyRef Name="StagesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProjectStageCheckList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Project" Relationship="Model1.ProjectProjectStageCheckList" FromRole="ProjectStageCheckList" ToRole="Project" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Stage" Relationship="Model1.StagesProjectStageCheckList" FromRole="ProjectStageCheckList" ToRole="Stages" />
+          <Property Name="StagesId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CheckList" Relationship="Model1.CheckListProjectStageCheckList" FromRole="ProjectStageCheckList" ToRole="CheckList" />
+          <Property Name="CheckListId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="ProjectProjectStageCheckList">
+          <End Type="Model1.Project" Role="Project" Multiplicity="1" />
+          <End Type="Model1.ProjectStageCheckList" Role="ProjectStageCheckList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectStageCheckList">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StagesProjectStageCheckList">
+          <End Type="Model1.Stages" Role="Stages" Multiplicity="1" />
+          <End Type="Model1.ProjectStageCheckList" Role="ProjectStageCheckList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stages">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectStageCheckList">
+              <PropertyRef Name="StagesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CheckListProjectStageCheckList">
+          <End Type="Model1.CheckList" Role="CheckList" Multiplicity="1" />
+          <End Type="Model1.ProjectStageCheckList" Role="ProjectStageCheckList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CheckList">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProjectStageCheckList">
+              <PropertyRef Name="CheckListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Model1StoreContainer" CdmEntityContainer="Model1Container">
+    <EntitySetMapping Name="Logins">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Login)">
+        <MappingFragment StoreEntitySet="Logins">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Role)">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Inquiries">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Inquiry)">
+        <MappingFragment StoreEntitySet="Inquiries">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="InquiryCode" ColumnName="InquiryCode" />
+          <ScalarProperty Name="InquiryType" ColumnName="InquiryType" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Region" ColumnName="Region" />
+          <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Quotation" ColumnName="Quotation" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Projects">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Project)">
+        <MappingFragment StoreEntitySet="Projects">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Stage" ColumnName="Stage" />
+          <ScalarProperty Name="StagesId" ColumnName="StagesId" />
+          <ScalarProperty Name="Payment" ColumnName="Payment" />
+          <ScalarProperty Name="Material" ColumnName="Material" />
+          <ScalarProperty Name="MaterialColor" ColumnName="MaterialColor" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="Drawing" ColumnName="Drawing" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stages">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Stages)">
+        <MappingFragment StoreEntitySet="Stages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CheckLists">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.CheckList)">
+        <MappingFragment StoreEntitySet="CheckLists">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StagesId" ColumnName="StagesId" />
+          <ScalarProperty Name="Item" ColumnName="Item" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProjectStageCheckLists">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.ProjectStageCheckList)">
+        <MappingFragment StoreEntitySet="ProjectStageCheckLists">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+          <ScalarProperty Name="StagesId" ColumnName="StagesId" />
+          <ScalarProperty Name="CheckListId" ColumnName="CheckListId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
