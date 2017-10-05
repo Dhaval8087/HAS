@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sprocs>
+  <sproc name="usp_LoginCheck">
+    <param name="UserName" SqlDbType="22" direction="1"></param>
+    <param name="Password" SqlDbType="22" direction="1"></param>
+  </sproc>
+</sprocs>

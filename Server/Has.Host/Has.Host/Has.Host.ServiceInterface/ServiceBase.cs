@@ -1,4 +1,5 @@
-﻿using Has.Host.ServiceModel.Common;
+﻿using BAL;
+using Has.Host.ServiceModel.Common;
 using Has.Host.ServiceModel.Types;
 using ServiceStack;
 using System;

@@ -76,11 +76,16 @@
     <Compile Include="Interfaces\IAuthenticationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBase.cs" />
+    <Compile Include="Utility\Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BAL\BAL.csproj">
+      <Project>{44702f3e-41d1-441d-bef3-7fe4121cdab4}</Project>
+      <Name>BAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Has.Host.ServiceModel\Has.Host.ServiceModel.csproj">
       <Project>{53E82AC1-DD1D-4C66-B55F-F9F4ACFB2F40}</Project>
       <Name>Has.Host.ServiceModel</Name>

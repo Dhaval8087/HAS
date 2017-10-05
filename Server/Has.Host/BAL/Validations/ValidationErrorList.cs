@@ -4,8 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Has.Host.ServiceModel.Common
+namespace BAL
 {
+    /// <summary>
+    /// A custom List object to maintain validations for entity
+    /// </summary>
+    [Serializable]
     public class ValidationErrorList
     {
         public List<ValidationError> Errors { get; set; }

@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Has.Host.ServiceModel.Common
+namespace BAL
 {
+    [Serializable]
     public class ValidationError
     {
         public string ErrorMessageResourceKey { get; set; }
         public string ErrorDescription { get; set; }
         public List<string> ReplacePlaceHolderValues { get; set; }
         /// <summary>
-        /// Indicates Error message for Success or failure.
+        /// Indicates Error message for Success or failure.  
         /// </summary>
         public bool IsSuccess { get; set; }
 

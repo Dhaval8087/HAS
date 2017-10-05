@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Has.Host.ServiceInterface",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Has.Host.Tests", "Has.Host\Has.Host.Tests\Has.Host.Tests.csproj", "{D22B5797-9F2A-4BA7-9636-6EFCE62EBE00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAL", "BAL\BAL.csproj", "{44702F3E-41D1-441D-BEF3-7FE4121CDAB4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BusinessLayer", "BusinessLayer", "{3B83B7F5-F145-43E7-8E4F-07D1DD595517}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,8 +37,15 @@ Global
 		{D22B5797-9F2A-4BA7-9636-6EFCE62EBE00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D22B5797-9F2A-4BA7-9636-6EFCE62EBE00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D22B5797-9F2A-4BA7-9636-6EFCE62EBE00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44702F3E-41D1-441D-BEF3-7FE4121CDAB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44702F3E-41D1-441D-BEF3-7FE4121CDAB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44702F3E-41D1-441D-BEF3-7FE4121CDAB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44702F3E-41D1-441D-BEF3-7FE4121CDAB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{44702F3E-41D1-441D-BEF3-7FE4121CDAB4} = {3B83B7F5-F145-43E7-8E4F-07D1DD595517}
 	EndGlobalSection
 EndGlobal
