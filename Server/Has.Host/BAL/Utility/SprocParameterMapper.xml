@@ -4,4 +4,15 @@
     <param name="UserName" SqlDbType="22" direction="1"></param>
     <param name="Password" SqlDbType="22" direction="1"></param>
   </sproc>
+  <sproc name="usp_Inquiries">
+    <param name="InquiryCode" SqlDbType="22" direction="1"></param>
+    <param name="InquiryType" SqlDbType="8" direction="1"></param>
+    <param name="City" SqlDbType="22" direction="1"></param>
+    <param name="Region" SqlDbType="22" direction="1"></param>
+    <param name="ClientName" SqlDbType="22" direction="1"></param>
+    <param name="Address" SqlDbType="22" direction="1"></param>
+    <param name="Comments" SqlDbType="22" direction="1"></param>
+    <param name="Quotation" SqlDbType="21" direction="1"></param>
+
+  </sproc>
 </sprocs>

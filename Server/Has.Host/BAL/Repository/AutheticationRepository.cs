@@ -1,6 +1,7 @@
 ﻿using BAL.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace BAL.Repository
             Logins lg = new Logins();
             lg.UserName = username;
             lg.Password = password;
-            var entity = this.GetEntity<Logins>(lg, _checkLogin);
+            var entity = this.GetEntity(lg, _checkLogin);
             if (entity == null)
             {
                 ValidationErrors.Errors.Add(new ValidationError { ErrorMessageResourceKey = "Bad Authetication", ErrorDescription = "Username or Password is invalid" });

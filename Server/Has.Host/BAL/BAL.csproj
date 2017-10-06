@@ -50,6 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryBaseExtensions.cs" />
     <Compile Include="Repository\AutheticationRepository.cs" />
+    <Compile Include="Repository\InquiriesRepository.cs" />
     <Compile Include="Utility\EntityMapper.cs" />
     <Compile Include="Utility\SProcParamUtility.cs" />
     <Compile Include="Validations\ValidationError.cs" />

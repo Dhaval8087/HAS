@@ -38,7 +38,6 @@ namespace Has.Host.ServiceInterface
                 else
                 {
                     response.ResultSuccess = false;
-                    
                 }
                 ValidationErrors.AddMany(repository.ValidationErrors);
             }
@@ -50,8 +49,6 @@ namespace Has.Host.ServiceInterface
             {
                 response.ResultMessages = Utility.GetAllValidationErrorCodesAndMessages(ValidationErrors);
             }
-            
-
             return response;
         }
     }

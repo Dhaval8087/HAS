@@ -83,7 +83,7 @@ namespace BAL
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="repository"></param>
@@ -109,7 +109,25 @@ namespace BAL
             }
         }
 
-       
+        public static int InsertAndGetEntityID<T>(this RepositoryBase<T> repository, T entity, string sprocName)
+        {
+            int entityID;
+            try
+            {
+                Stopwatch sw = Stopwatch.StartNew();
+                IDbCommand command = new SqlCommand().GetCommandWithParameters(entity, sprocName);
+                SqlConnection conn = DBConnectionHelper.OpenNewSqlConnection(repository.ConnectionString);
+                command.Connection = conn;
+                entityID = Convert.ToInt32(command.ExecuteScalar());
+                DBConnectionHelper.CloseSqlConnection(conn);
+                sw.Stop();
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+            return entityID;
+        }
 
     }
 }
