@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="DBConnect\RepositoryBase.cs" />
     <Compile Include="DBConnect\DBConnectionHelper.cs" />
+    <Compile Include="Model\Inquiry.cs" />
     <Compile Include="Model\Logins.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryBaseExtensions.cs" />
