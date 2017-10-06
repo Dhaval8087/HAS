@@ -17,7 +17,7 @@ namespace Has.Host.ServiceInterface
     public class AuthenticationService : ServiceBase, IAuthenticationService
     {
         public ICacheClient CacheClient { get; set; }
-        public object Any(LoginRequest request)
+        public LoginResponse Any(LoginRequest request)
         {
             LoginResponse response = new LoginResponse();
             try

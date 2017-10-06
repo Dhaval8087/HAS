@@ -9,6 +9,6 @@ namespace Has.Host.ServiceInterface.Interfaces
 {
     public interface IAuthenticationService
     {
-       object Any(LoginRequest request);
+        LoginResponse Any(LoginRequest request);
     }
 }

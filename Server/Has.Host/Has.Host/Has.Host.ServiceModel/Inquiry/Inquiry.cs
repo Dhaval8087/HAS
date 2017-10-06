@@ -1,14 +1,15 @@
-﻿using System;
+﻿using ServiceStack;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BAL.Model
+namespace Has.Host.ServiceModel.Inquiry
 {
-    public class Inquiry
+    [Route("/AddInquiryRequest")]
+    public class AddInquiryRequest : IReturn<InquiryResponse>
     {
-        public int UID { get; set; }
         public string InquiryCode { get; set; }
         public int InquiryType { get; set; }
         public string City { get; set; }
@@ -17,5 +18,9 @@ namespace BAL.Model
         public string Address { get; set; }
         public string Comments { get; set; }
         public Byte[] Quotation { get; set; }
+    }
+    public class InquiryResponse : ResultResponse
+    {
+        public int UID { get; set; }
     }
 }

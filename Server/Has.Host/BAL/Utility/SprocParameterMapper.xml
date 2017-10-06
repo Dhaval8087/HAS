@@ -4,7 +4,8 @@
     <param name="UserName" SqlDbType="22" direction="1"></param>
     <param name="Password" SqlDbType="22" direction="1"></param>
   </sproc>
-  <sproc name="usp_Inquiries">
+  <sproc name="usp_Inqury_INSERT">
+    <param name="UID" SqlDbType="8" direction="3"></param>
     <param name="InquiryCode" SqlDbType="22" direction="1"></param>
     <param name="InquiryType" SqlDbType="8" direction="1"></param>
     <param name="City" SqlDbType="22" direction="1"></param>

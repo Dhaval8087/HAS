@@ -73,15 +73,8 @@ namespace Has.Host.App_Start
                     }
                     else if (cacheValue == null)
                     {
-                        /*if (authenticationService.GetByAuthTokenID(new Guid(req.Headers["x-user-id"])) != null)
-                        {
-                            responseMessage = "Error:AuthToken Expired.please login again.";
-                        }
-                        else
-                        {
-                            responseMessage = "Error:Invalid Authentication";
-                            IsFailure = true;
-                        }*/
+                        responseMessage = "Error:Invalid Authentication or AuthToken Expired.please login again.";
+                        IsFailure = true;
                     }
                     if (IsFailure)
                     {

@@ -44,10 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authetication\LoginRequest.cs" />
-    <Compile Include="Authetication\LoginResponse.cs" />
+    <Compile Include="Authetication\Login.cs" />
     <Compile Include="Common\CacheItems.cs" />
     <Compile Include="Common\ResultResponse.cs" />
+    <Compile Include="Inquiry\Inquiry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Types\UserType.cs" />
   </ItemGroup>

@@ -13,13 +13,14 @@ Date:      10/6/2017 12:49:25 PM
 
 namespace BAL.Repository
 {
+   
     public class InquiriesRepository : RepositoryBase<Inquiry>
     {
 
         // Private fields
         #region Fields
 
-        //// Fields MUST start with an underscore, e.g. int _number;
+        const string _insertinqury = "usp_Inqury_INSERT";
 
         #endregion
 
@@ -43,11 +44,9 @@ namespace BAL.Repository
 
         // All public methods for this class.
         #region Methods
-        public bool InsertInquiry(Inquiry inqury)
+        public int InsertInquiry(Inquiry inqury)
         {
-            bool isSucess = false;
-
-            return isSucess;
+            return this.InsertAndGetEntityID(inqury, _insertinqury);
         }
         #endregion
 
