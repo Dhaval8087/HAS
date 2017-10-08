@@ -12,6 +12,11 @@ class Login extends Component {
             password: ''
         }
     }
+
+    handleClick(event)
+    {
+      this.context.router.push('/home')
+    }
     render() {
         return (
             <div className="main">
@@ -52,4 +57,7 @@ class Login extends Component {
 const style = {
     margin: 15,
 };
+Login.contextTypes = {
+    router: React.PropTypes.object.isRequired
+  };
 export default Login;
