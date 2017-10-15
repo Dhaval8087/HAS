@@ -15,7 +15,7 @@ class Login extends Component {
 
     handleClick(event)
     {
-      this.context.router.push('/home')
+      this.context.router.push('/home');
     }
     render() {
         return (

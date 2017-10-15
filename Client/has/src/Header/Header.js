@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from "jquery";
 import './Header.css';
+import '../common/common.css';
 $(document).mouseup(function (e) {
     var container = $(".dropdown-menu");
 
@@ -12,9 +13,9 @@ $(document).mouseup(function (e) {
 });
 var ctrmModules = [
     {
-        "Trading": [
+        "Admin": [
             {
-                "Deals": [
+                "Add Inquiry": [
                     {
                         "color": "#ED7D31",
                         "icon": "fa fa-refresh"
@@ -28,7 +29,7 @@ var ctrmModules = [
                 ]
             }
         ],
-        "Risk": [
+        "Employeer": [
             {
                 "Trading Positions and P/L": [
                     {
@@ -37,29 +38,17 @@ var ctrmModules = [
                     }
                 ]
             }
-        ],
-        "Settlement": [
-            {
-                "Cash Flows": [
-                    {
-                        "color": "#5B9BD5",
-                        "icon": "fa fa-money"
-                    }
-                ]
-            }
-        ],
-        "Operations": [
-            {
-            }
         ]
+
     }
 ];
 export default class Header extends React.Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             navCollapsed: true
         };
+        this.menuItemClicked=this.menuItemClicked.bind(this);
     }
     _onToggleNav = () => {
         this.setState({ navCollapsed: !this.state.navCollapsed })
@@ -86,6 +75,18 @@ export default class Header extends React.Component {
                 )
             }.bind(this))
         )
+    }
+    menuItemClicked(event) {
+        switch (event.target.id) {
+            case "addinq":
+                this.context.router.push({
+                    pathname: `/addinquiry/${event.target.id}`
+                });
+                break;
+
+            default:
+                break;
+        }
     }
     render() {
 
@@ -114,23 +115,30 @@ export default class Header extends React.Component {
                         className={(navCollapsed ? 'collapse' : '') + ' navbar-collapse'}>
                         <ul className="nav navbar-nav">
                             <li className="dropdown mega-dropdown">
-                                <a href="#" className="dropdown-toggle" data-toggle="dropdown">Inquiry <span className="caret"></span></a>
+                                <a className="dropdown-toggle" data-toggle="dropdown">Inquiry <span className="caret"></span></a>
                                 <ul className="dropdown-menu mega-dropdown-menu">
                                     <li className="col-sm-3">
                                         <ul>
-                                            <li className="dropdown-header">Plus</li>
-                                            <li><a href="#">Navbar Inverse</a></li>
-                                            <li><a href="#">Pull Right Elements</a></li>
-                                            <li><a href="#">Coloured Headers</a></li>
-                                            <li><a href="#">Primary Buttons & Default</a></li>
+                                            <li className="dropdown-header">Inquiry Operations</li>
+                                            <li><a id="addinq" className="pointer" onClick={this.menuItemClicked}>Add Inquiry</a></li>
+                                           
                                         </ul>
                                     </li>
                                 </ul>
                             </li>
                             <li className="dropdown mega-dropdown">
-
+                            <a className="dropdown-toggle" data-toggle="dropdown">Projects <span className="caret"></span></a>
+                            <ul className="dropdown-menu mega-dropdown-menu">
+                                <li className="col-sm-3">
+                                    <ul>
+                                        <li className="dropdown-header">Inquiry Operations</li>
+                                        <li><a id="addproj" className="pointer" onClick={this.menuItemClicked}>Add Project</a></li>
+                                       
+                                    </ul>
+                                </li>
+                            </ul>
                             </li>
-                            <li><a href="#">Store locator</a></li>
+                            
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
                             <li className="dropdown">
@@ -151,3 +159,6 @@ export default class Header extends React.Component {
         )
     }
 }
+Header.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};

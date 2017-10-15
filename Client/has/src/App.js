@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Router, Route, IndexRoute, hashHistory } from "react-router";
 import Login from './Login/Login';
 import Home from './Home/Home';
+import AddInquiry from'./Inquiry/Add';
 import RootContainer from './RootContainer';
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
       <Route path="/" component={RootContainer}>
         <IndexRoute component={Login}></IndexRoute>
         <Route path="home" name="home" component={Home}></Route>
+        <Route path="addinquiry/:type" name="addinquiry" component={AddInquiry}></Route>
       </Route>
     </Router>
     );
