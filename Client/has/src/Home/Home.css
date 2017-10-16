@@ -22,3 +22,6 @@ input, button, submit
     border: 3px solid green;
     padding: 10px;
 }
+.dark-bg{
+    background-color: black
+}
