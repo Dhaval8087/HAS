@@ -19,10 +19,10 @@ export default class Home extends React.Component {
     render() {
        
         return (
-            <div>
+            <div >
                 {this.state.isHeader ? <Header /> : null}
                 <br/>
-                <section className="dark-bg" id="about">
+                <section  id="about">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-12 text-center">

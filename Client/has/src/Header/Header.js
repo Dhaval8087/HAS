@@ -95,7 +95,7 @@ export default class Header extends React.Component {
         const { navCollapsed } = this.state
         return (
             <div className="container">
-                <nav className="navbar navbar-fixed-top bg-dark">
+                <nav className="navbar navbar-fixed-top ">
                     <div className="navbar-header">
                         <button
                             aria-expanded='false'
