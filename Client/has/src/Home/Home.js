@@ -1,5 +1,6 @@
 import React from "react";
 import Header from '../Header/Header';
+import LoginStore from '../stores/LoginStore';
 import './Home.css';
 import 'font-awesome/css/font-awesome.min.css';
 export default class Home extends React.Component {
@@ -10,6 +11,10 @@ export default class Home extends React.Component {
         };
         this.SelectionType = this.SelectionType.bind(this);
     }
+    componentDidMount() {
+        if (LoginStore.getUserInfo() == "")
+            this.context.router.push('/');
+    }
     SelectionType(event) {
         /*this.context.router.push({    // use push
             pathname: `/menuheader/${event.target.id}`,
@@ -17,12 +22,12 @@ export default class Home extends React.Component {
         this.setState({ isHeader: true });
     }
     render() {
-       
+
         return (
             <div >
                 {this.state.isHeader ? <Header /> : null}
-                <br/>
-                <section  id="about">
+                <br />
+                <section id="about">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-12 text-center">

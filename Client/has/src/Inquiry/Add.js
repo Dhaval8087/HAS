@@ -6,6 +6,7 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Upload from 'material-ui-upload/Upload';
 import RaisedButton from 'material-ui/RaisedButton';
+import LoginStore from '../stores/LoginStore';
 import './Add.css';
 const styles = {
     customWidth: {
@@ -28,6 +29,10 @@ export default class Add extends React.Component {
 
         };
         this.onFileLoad = this.onFileLoad.bind(this);
+    }
+    componentDidMount() {
+        if (LoginStore.getUserInfo() == "")
+            this.context.router.push('/');
     }
     onFileLoad(e, file) {
 
@@ -55,6 +60,7 @@ export default class Add extends React.Component {
                                 <DropDownMenu
                                     autoWidth={false}
                                     style={styles.customWidth}
+                                    value={this.state.type}
                                     onChange={(event, newValue) => this.setState({ type: newValue })}
                                 >
                                     <MenuItem value={1} primaryText="Home Theatre" />
@@ -67,8 +73,10 @@ export default class Add extends React.Component {
                             <div className="col-md-6 margin25">
                                 <DropDownMenu
                                     autoWidth={false}
+                                    value={this.state.inqtype}
                                     style={styles.customWidth}
                                     onChange={(event, newValue) => this.setState({ inqtype: newValue })}
+                                    
                                 >
                                     <MenuItem value={1} primaryText="Reference" />
                                     <MenuItem value={2} primaryText="Direct" />
@@ -89,6 +97,7 @@ export default class Add extends React.Component {
                             <div className="col-md-6 margin25">
                                 <DropDownMenu
                                     autoWidth={false}
+                                    value={this.state.region}
                                     onChange={(event, newValue) => this.setState({ region: newValue })}
                                     style={styles.customWidth}
                                 >
@@ -143,7 +152,9 @@ export default class Add extends React.Component {
                             </div>
 
                         </div>
-
+                        <div className="row">
+                        <br/>
+                        </div>
                     </form>
                 </MuiThemeProvider>
             </div>
@@ -153,3 +164,7 @@ export default class Add extends React.Component {
 const style = {
     margin: 15,
 };
+Add.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
+

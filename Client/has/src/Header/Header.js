@@ -2,6 +2,7 @@ import React from 'react';
 import $ from "jquery";
 import './Header.css';
 import '../common/common.css';
+import LoginStore from '../stores/LoginStore';
 $(document).mouseup(function (e) {
     var container = $(".dropdown-menu");
 
@@ -48,7 +49,8 @@ export default class Header extends React.Component {
         this.state = {
             navCollapsed: true
         };
-        this.menuItemClicked=this.menuItemClicked.bind(this);
+        this.menuItemClicked = this.menuItemClicked.bind(this);
+        this.Logout = this.Logout.bind(this);
     }
     _onToggleNav = () => {
         this.setState({ navCollapsed: !this.state.navCollapsed })
@@ -88,6 +90,9 @@ export default class Header extends React.Component {
                 break;
         }
     }
+    Logout() {
+        this.context.router.push('/');
+    }
     render() {
 
         var data = ctrmModules;
@@ -121,37 +126,34 @@ export default class Header extends React.Component {
                                         <ul>
                                             <li className="dropdown-header">Inquiry Operations</li>
                                             <li><a id="addinq" className="pointer" onClick={this.menuItemClicked}>Add Inquiry</a></li>
-                                           
+
                                         </ul>
                                     </li>
                                 </ul>
                             </li>
                             <li className="dropdown mega-dropdown">
-                            <a className="dropdown-toggle" data-toggle="dropdown">Projects <span className="caret"></span></a>
-                            <ul className="dropdown-menu mega-dropdown-menu">
-                                <li className="col-sm-3">
-                                    <ul>
-                                        <li className="dropdown-header">Inquiry Operations</li>
-                                        <li><a id="addproj" className="pointer" onClick={this.menuItemClicked}>Add Project</a></li>
-                                       
-                                    </ul>
-                                </li>
-                            </ul>
+                                <a className="dropdown-toggle" data-toggle="dropdown">Projects <span className="caret"></span></a>
+                                <ul className="dropdown-menu mega-dropdown-menu">
+                                    <li className="col-sm-3">
+                                        <ul>
+                                            <li className="dropdown-header">Inquiry Operations</li>
+                                            <li><a id="addproj" className="pointer" onClick={this.menuItemClicked}>Add Project</a></li>
+
+                                        </ul>
+                                    </li>
+                                </ul>
                             </li>
-                            
+
                         </ul>
                         <ul className="nav navbar-nav navbar-right">
                             <li className="dropdown">
-                                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My account <span className="caret"></span></a>
+                                <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Welcome, {LoginStore.getUserInfo().emailAddress}</a>
                                 <ul className="dropdown-menu" role="menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li className="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
+                                    <li><a onClick={this.Logout}>Logout</a></li>
+
                                 </ul>
                             </li>
-                            <li><a href="#">My cart (0) items</a></li>
+                           
                         </ul>
                     </div>
                 </nav>

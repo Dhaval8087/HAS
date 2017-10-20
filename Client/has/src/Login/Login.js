@@ -1,8 +1,10 @@
+import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import React, { Component } from 'react';
+import LoginStore from '../stores/LoginStore';
+
 import './login.css';
 class Login extends Component {
     constructor(props) {
@@ -11,11 +13,18 @@ class Login extends Component {
             username: '',
             password: ''
         }
+        
     }
 
     handleClick(event)
     {
-      this.context.router.push('/home');
+        var data={
+            "EmailAddress":this.state.username,
+            "Password":this.state.password
+        };
+        LoginStore.AutheticateUser(data,function(data){
+            this.context.router.push('/home');
+        }.bind(this));
     }
     render() {
         return (

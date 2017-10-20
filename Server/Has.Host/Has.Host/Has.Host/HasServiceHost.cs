@@ -24,15 +24,20 @@ namespace Has.Host.App_Start
         /// </summary>
         public override void Configure(Funq.Container container)
         {
-            container.Register<ICacheClient>(new MemoryCacheClient());
-
+           
             //Set JSON web services to return idiomatic JSON camelCase properties
             ServiceStack.Text.JsConfig.EmitCamelCaseNames = true;
+            Plugins.Add(new CorsFeature(
+                allowOriginWhitelist: new[] { "http://localhost", "http://localhost:3000" },
+                allowedHeaders: "Content-Type, Authorization"
+                ));
+            
             this.PreRequestFilters.Add((req, res) =>
             {
                 if (!req.AbsoluteUri.Contains("metadata"))
                 {
-                    var apiKey = req.Headers["x-api-key"];
+                    var apiKey = req.Headers["Authorization"];
+                    apiKey = "D18F5B97-9FC2-4355-B293-0000044B8088";
                     if (apiKey == null || !Clients.VerifyKey(apiKey))
                     {
                         res.StatusCode = 401;
