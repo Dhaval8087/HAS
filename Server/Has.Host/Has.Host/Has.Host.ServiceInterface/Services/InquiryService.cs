@@ -1,5 +1,6 @@
 ﻿using BAL.Model;
 using BAL.Repository;
+using Has.Host.ServiceModel;
 using Has.Host.ServiceModel.Inquiry;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,10 @@ namespace Has.Host.ServiceInterface
 {
     public class InquiryService : ServiceBase
     {
-        InquiriesRepository repository;
-
-
+       
         public InquiryResponse Any(AddInquiryRequest request)
         {
-            repository = new InquiriesRepository();
+            InquiriesRepository repository = new InquiriesRepository();
             InquiryResponse response = new InquiryResponse();
             try
             {
@@ -28,6 +27,7 @@ namespace Has.Host.ServiceInterface
                     ClientName = request.ClientName,
                     Comments = request.Comments,
                     InquiryCode = request.InquiryCode,
+                    Type = request.Type,
                     InquiryType = request.InquiryType,
                     Region = request.Region,
                     Quotation = request.Quotation
@@ -67,5 +67,31 @@ namespace Has.Host.ServiceInterface
             return response;
         }
 
+        public ResultResponse Any(UploadQuatation request)
+        {
+            ResultResponse response = new ResultResponse();
+            InquiriesRepository repository = new InquiriesRepository();
+            try
+            {
+                var id = Convert.ToInt32(this.Request.QueryString["Id"]);
+                var getInquiry = repository.GetInquiryById(new Inquiry { InqId = id });
+                byte[] fileData = null;
+                using (var binaryReader = new BinaryReader(Request.Files[0].InputStream))
+                {
+                    fileData = binaryReader.ReadBytes((int)Request.Files[0].ContentLength);
+                }
+                getInquiry.Quotation = fileData;
+
+            }
+            catch (Exception ex)
+            {
+                ValidationErrors.Add("Exception", ex.Message);
+            }
+            finally
+            {
+                response.ResultMessages = Utility.GetAllValidationErrorCodesAndMessages(ValidationErrors);
+            }
+            return response;
+        }
     }
 }

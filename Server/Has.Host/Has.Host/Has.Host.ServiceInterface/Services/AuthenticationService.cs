@@ -11,6 +11,7 @@ using Has.Host.ServiceModel.Common;
 using BAL.Model;
 using System.Data;
 using BAL.Repository;
+using BAL;
 
 namespace Has.Host.ServiceInterface
 {
@@ -23,23 +24,35 @@ namespace Has.Host.ServiceInterface
             try
             {
                 AutheticationRepository repository = new AutheticationRepository();
-                var login = repository.CheckAuthetication(request.EmailAddress, request.Password);
-                if (login != null && !repository.ValidationErrors.Errors.Any())
+                if (string.IsNullOrEmpty(request.EmailAddress))
                 {
-                    response.EmailAddress = login.UserName;
-                    response.UserTypeID = login.RoleId;
-
-                    var guid = Guid.NewGuid().ToString();
-                    CacheItems cacheItems = new CacheItems { AuthToken = guid };
-                    CacheClient.Add(guid, cacheItems, new TimeSpan(0, 1, 0, 0));
-                    response.AuthToken = guid;
-                    response.ResultSuccess = true;
+                    ValidationErrors.Errors.Add(new ValidationError { ErrorMessageResourceKey = "Bad Authetication", ErrorDescription = "Username is required" });
+                }
+                else if (string.IsNullOrEmpty(request.Password))
+                {
+                    ValidationErrors.Errors.Add(new ValidationError { ErrorMessageResourceKey = "Bad Authetication", ErrorDescription = "Password is required" });
                 }
                 else
                 {
-                    response.ResultSuccess = false;
+                    var login = repository.CheckAuthetication(request.EmailAddress, request.Password);
+                    if (login != null && !repository.ValidationErrors.Errors.Any())
+                    {
+                        response.EmailAddress = login.UserName;
+                        response.UserTypeID = login.RoleId;
+
+                        var guid = Guid.NewGuid().ToString();
+                        CacheItems cacheItems = new CacheItems { AuthToken = guid };
+                        CacheClient.Add(guid, cacheItems, new TimeSpan(0, 1, 0, 0));
+                        response.AuthToken = guid;
+                        response.ResultSuccess = true;
+                    }
+                    else
+                    {
+                        response.ResultSuccess = false;
+                    }
+                    ValidationErrors.AddMany(repository.ValidationErrors);
                 }
-                ValidationErrors.AddMany(repository.ValidationErrors);
+
             }
             catch (Exception ex)
             {

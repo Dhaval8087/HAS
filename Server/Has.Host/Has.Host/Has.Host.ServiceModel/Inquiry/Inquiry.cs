@@ -12,6 +12,7 @@ namespace Has.Host.ServiceModel.Inquiry
     {
         public string InquiryCode { get; set; }
         public int InquiryType { get; set; }
+        public int Type { get; set; }
         public string City { get; set; }
         public string Region { get; set; }
         public string ClientName { get; set; }
@@ -22,5 +23,10 @@ namespace Has.Host.ServiceModel.Inquiry
     public class InquiryResponse : ResultResponse
     {
         public int UID { get; set; }
+    }
+    [Route("/UploadQuatation")]
+    public class UploadQuatation:IReturn<ResultResponse>
+    {
+        public int Id { get; set; }
     }
 }

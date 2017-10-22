@@ -7,6 +7,7 @@
   <sproc name="usp_Inqury_INSERT">
     <param name="UID" SqlDbType="8" direction="3"></param>
     <param name="InquiryCode" SqlDbType="22" direction="1"></param>
+    <param name="Type" SqlDbType="8" direction="1"></param>
     <param name="InquiryType" SqlDbType="8" direction="1"></param>
     <param name="City" SqlDbType="22" direction="1"></param>
     <param name="Region" SqlDbType="22" direction="1"></param>
@@ -15,5 +16,13 @@
     <param name="Comments" SqlDbType="22" direction="1"></param>
     <param name="Quotation" SqlDbType="21" direction="1"></param>
 
+  </sproc>
+  <sproc name="usp_UploadQuatation">
+    <param name="Quotation" SqlDbType="21" direction="1"></param>
+    <param name="InqId" SqlDbType="8" direction="1"></param>
+    
+  </sproc>
+  <sproc name="usp_GetInquiry_By_Id">
+    <param name="InqId" SqlDbType="8" direction="1"></param>
   </sproc>
 </sprocs>

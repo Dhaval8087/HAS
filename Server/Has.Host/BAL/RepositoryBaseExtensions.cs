@@ -122,7 +122,7 @@ namespace BAL
                 DBConnectionHelper.CloseSqlConnection(conn);
                 sw.Stop();
             }
-            catch (SqlException)
+            catch (SqlException ex)
             {
                 throw;
             }

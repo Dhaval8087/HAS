@@ -21,7 +21,7 @@ namespace BAL.Repository
         #region Fields
 
         const string _insertinqury = "usp_Inqury_INSERT";
-
+        const string _getinquirybyid = "usp_GetInquiry_By_Id";
         #endregion
 
         // All class constructors, initialize, terminate and dispose methods.
@@ -47,6 +47,10 @@ namespace BAL.Repository
         public int InsertInquiry(Inquiry inqury)
         {
             return this.InsertAndGetEntityID(inqury, _insertinqury);
+        }
+        public Inquiry GetInquiryById(Inquiry inquiry)
+        {
+            return this.GetEntity<Inquiry>(inquiry, _getinquirybyid);
         }
         #endregion
 

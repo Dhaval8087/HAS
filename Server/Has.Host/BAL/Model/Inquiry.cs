@@ -10,6 +10,7 @@ namespace BAL.Model
     {
         public int UID { get; set; }
         public string InquiryCode { get; set; }
+        public int Type { get; set; }
         public int InquiryType { get; set; }
         public string City { get; set; }
         public string Region { get; set; }
@@ -17,5 +18,6 @@ namespace BAL.Model
         public string Address { get; set; }
         public string Comments { get; set; }
         public Byte[] Quotation { get; set; }
+        public int? InqId { get; set; }
     }
 }

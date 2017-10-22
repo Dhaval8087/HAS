@@ -7,9 +7,8 @@ import CommonFunctions from '../CommonFunctions';
 import $ from "jquery"
 import _ from 'underscore';
 let CHANGE_EVENT = 'change';
-let _loginResponse = '';
-let userInfo = '';
-var LoginStore = _.extend({}, EventEmitter.prototype, {
+
+var InquiryStore = _.extend({}, EventEmitter.prototype, {
     // Emit Change event
     emitChange: function () {
         this.emit(CHANGE_EVENT);
@@ -22,14 +21,9 @@ var LoginStore = _.extend({}, EventEmitter.prototype, {
     removeChangeListener: function (callback) {
         this.removeListener(CHANGE_EVENT, callback);
     },
-    getAutheticateInformation: function () {
-        return _loginResponse;
-    },
-    getUserInfo: function () {
-        return userInfo;
-    },
-    AutheticateUser: function (data, callback) {
-        var url = config.dev_Url + AppConstant.LogineRequest;
+
+    AddInquiry: function (data, callback) {
+        var url = config.dev_Url + AppConstant.AddInquiryRequest;
 
         $.ajax({
             url: url,
@@ -39,30 +33,49 @@ var LoginStore = _.extend({}, EventEmitter.prototype, {
             processData: true,
             headers: { "Authorization": "D18F5B97-9FC2-4355-B293-0000044B8088" },
             success: function (data) {
-               CommonFunctions.handleResponse(data,function(){
-                 userInfo=data;
-                 callback();
-               });                
+                CommonFunctions.handleResponse(data, function () {
+                    callback(data);
+                });
             },
             error: function (xhr) {
-              
+
+            }.bind(this)
+        });
+    },
+    UploadQuatation: function (formData, id, callback) {
+        var url = config.dev_Url + AppConstant.UploadQuatation + "?Id=" + id;
+        $.ajax({
+            url: url,
+            data: formData,
+            type: 'POST',
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                CommonFunctions.handleResponse(data, function () {
+                    callback(data);
+                });
+            },
+            error: function (xhr) {
+
             }.bind(this)
         });
     }
+
 });
 AppDispatcher.register(function (payload) {
     var action = payload.action;
 
     switch (action.actionType) {
-        case constants.RECEIVE_LOGIN_RES:
-            //loadCashFlowData(action.data);
+        case constants.ADD_INQUIRY_REQ:
+
             break;
+
         default:
             return true;
     }
     // If action was responded to, emit change event
-    LoginStore.emitChange();
+    InquiryStore.emitChange();
 });
-export default LoginStore;
-//export { LoginStore as default }
-//module.exports = LoginStore;
+export default InquiryStore;
