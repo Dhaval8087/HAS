@@ -13,14 +13,14 @@ namespace Has.Host.ServiceInterface
 {
     public class InquiryService : ServiceBase
     {
-       
+
         public InquiryResponse Any(AddInquiryRequest request)
         {
             InquiriesRepository repository = new InquiriesRepository();
             InquiryResponse response = new InquiryResponse();
             try
             {
-                Inquiry inqury = new Inquiry
+                BAL.Model.Inquiry inqury = new BAL.Model.Inquiry
                 {
                     Address = request.Address,
                     City = request.City,
@@ -74,18 +74,53 @@ namespace Has.Host.ServiceInterface
             try
             {
                 var id = Convert.ToInt32(this.Request.QueryString["Id"]);
-                var getInquiry = repository.GetInquiryById(new Inquiry { InqId = id });
                 byte[] fileData = null;
                 using (var binaryReader = new BinaryReader(Request.Files[0].InputStream))
                 {
                     fileData = binaryReader.ReadBytes((int)Request.Files[0].ContentLength);
                 }
-                getInquiry.Quotation = fileData;
+                response.ResultSuccess= repository.UpdateQuatation(id, fileData);
 
             }
             catch (Exception ex)
             {
+                ValidationErrors.AddMany(repository.ValidationErrors);
                 ValidationErrors.Add("Exception", ex.Message);
+            }
+            finally
+            {
+                response.ResultMessages = Utility.GetAllValidationErrorCodesAndMessages(ValidationErrors);
+            }
+            return response;
+        }
+
+        public GetInquiryReponse Any(GetInquiryRequest request)
+        {
+            InquiriesRepository repository = new InquiriesRepository();
+            GetInquiryReponse response = new GetInquiryReponse();
+            try
+            {
+                repository.GetInquiries().ForEach(item =>
+                {
+                    response.Inquires.Add(new ServiceModel.Inquiry.Inquiry
+                    {
+                        Address = item.Address,
+                        City = item.City,
+                        ClientName = item.ClientName,
+                        Comments = item.Comments,
+                        Id = item.Id.Value,
+                        InquiryCode = item.InquiryCode,
+                        InquiryType = item.InquiryType,
+                        Region = item.Region,
+                        Type = item.Type
+                    });
+                });
+                response.ResultSuccess = true;
+            }
+            catch (Exception ex)
+            {
+                ValidationErrors.AddMany(repository.ValidationErrors);
+                ValidationErrors.Add("Fail", "Failed to load Inquiry");
             }
             finally
             {

@@ -37,7 +37,7 @@ var LoginStore = _.extend({}, EventEmitter.prototype, {
             data: data,
             dataType: 'json',
             processData: true,
-            headers: { "Authorization": "D18F5B97-9FC2-4355-B293-0000044B8088" },
+            headers: { 'Authorization': 'D18F5B97-9FC2-4355-B293-0000044B8088' },
             success: function (data) {
                CommonFunctions.handleResponse(data,function(){
                  userInfo=data;

@@ -19,10 +19,10 @@
   </sproc>
   <sproc name="usp_UploadQuatation">
     <param name="Quotation" SqlDbType="21" direction="1"></param>
-    <param name="InqId" SqlDbType="8" direction="1"></param>
-    
+    <param name="Id" SqlDbType="8" direction="1"></param>
+
   </sproc>
   <sproc name="usp_GetInquiry_By_Id">
-    <param name="InqId" SqlDbType="8" direction="1"></param>
+    <param name="Id" SqlDbType="8" direction="1"></param>
   </sproc>
 </sprocs>

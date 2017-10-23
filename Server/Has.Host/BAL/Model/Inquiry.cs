@@ -18,6 +18,6 @@ namespace BAL.Model
         public string Address { get; set; }
         public string Comments { get; set; }
         public Byte[] Quotation { get; set; }
-        public int? InqId { get; set; }
+        public int? Id { get; set; }
     }
 }

@@ -13,7 +13,7 @@ Date:      10/6/2017 12:49:25 PM
 
 namespace BAL.Repository
 {
-   
+
     public class InquiriesRepository : RepositoryBase<Inquiry>
     {
 
@@ -22,6 +22,8 @@ namespace BAL.Repository
 
         const string _insertinqury = "usp_Inqury_INSERT";
         const string _getinquirybyid = "usp_GetInquiry_By_Id";
+        const string _updateQuatation = "usp_UploadQuatation";
+        const string _getInquiries = "usp_GetInquires";
         #endregion
 
         // All class constructors, initialize, terminate and dispose methods.
@@ -51,6 +53,19 @@ namespace BAL.Repository
         public Inquiry GetInquiryById(Inquiry inquiry)
         {
             return this.GetEntity<Inquiry>(inquiry, _getinquirybyid);
+        }
+        public bool UpdateQuatation(int Id, byte[] quatation)
+        {
+            Inquiry inq = new Inquiry
+            {
+                Id = Id,
+                Quotation = quatation
+            };
+            return this.InsertOrUpdate<Inquiry>(inq, _updateQuatation);
+        }
+        public List<Inquiry> GetInquiries()
+        {
+            return this.GetEntityCollection<Inquiry>(new Inquiry { }, _getInquiries);
         }
         #endregion
 

@@ -85,7 +85,10 @@ export default class Header extends React.Component {
                     pathname: `/addinquiry/${event.target.id}`
                 });
                 break;
-
+            case "viewinq":
+                this.context.router.push({
+                    pathname:`viewinquiry/${event.target.id}`
+                });
             default:
                 break;
         }
@@ -126,7 +129,7 @@ export default class Header extends React.Component {
                                         <ul>
                                             <li className="dropdown-header">Inquiry Operations</li>
                                             <li><a id="addinq" className="pointer" onClick={this.menuItemClicked}>Add Inquiry</a></li>
-
+                                            <li><a id="viewinq" className="pointer" onClick={this.menuItemClicked}>View Inquiries</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -136,7 +139,7 @@ export default class Header extends React.Component {
                                 <ul className="dropdown-menu mega-dropdown-menu">
                                     <li className="col-sm-3">
                                         <ul>
-                                            <li className="dropdown-header">Inquiry Operations</li>
+                                            <li className="dropdown-header">Project Operations</li>
                                             <li><a id="addproj" className="pointer" onClick={this.menuItemClicked}>Add Project</a></li>
 
                                         </ul>

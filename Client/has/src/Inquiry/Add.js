@@ -7,10 +7,13 @@ import MenuItem from 'material-ui/MenuItem';
 import Upload from 'material-ui-upload/Upload';
 import RaisedButton from 'material-ui/RaisedButton';
 import InquiryStore from '../stores/InquiryStore';
+import LoginStore from '../stores/LoginStore';
 import FileInput from 'react-file-input';
 import Dropzone from 'react-dropzone';
-import './Add.css';
-let file;
+import toastr from 'toastr';
+import '../common/toastr.css';
+import './Inquiry.css';
+let file = '';
 const styles = {
     customWidth: {
         width: 300,
@@ -20,7 +23,14 @@ const styles = {
 export default class Add extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.state = this.getDefault();
+
+        this.saveInquiry = this.saveInquiry.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+    }
+    getDefault() {
+        return {
             inquirycode: '',
             type: '',
             inqtype: '',
@@ -36,17 +46,13 @@ export default class Add extends React.Component {
             regionerror: '',
             clientnameerror: '',
             addresserror: '',
-            filename:'Browse File or Drop',
+            filename: 'Browse File or Drop',
             isValid: true
-
-        };
-
-        this.saveInquiry = this.saveInquiry.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        }
     }
     componentDidMount() {
-        /*if (LoginStore.getUserInfo() == "")
-            this.context.router.push('/');*/
+        if (LoginStore.getUserInfo() == "")
+            this.context.router.push('/');
     }
     saveInquiry() {
         this.validation();
@@ -63,16 +69,31 @@ export default class Add extends React.Component {
             }
 
 
-            /*InquiryStore.AddInquiry(data, function (res) {
+            InquiryStore.AddInquiry(data, function (res) {
+                if (file != '') {
+                    var formData = new FormData();
+                    formData.append('file', file);
 
-              
-            });*/
+                    InquiryStore.UploadQuatation(formData, res.uid, function () {
+                        toastr.success("Inquiry Added Successfully!!");
+                        this.clearField();
+                    }.bind(this))
+                }
+
+            }.bind(this));
         }
-        var formData = new FormData();
-        formData.append('file', file);
-        InquiryStore.UploadQuatation(formData, 2, function () {
 
-        })
+    }
+    clearField() {
+        this.state = this.getDefault();
+        file = '';
+        this.setState({});
+    }
+    handleCancel() {
+        this.state = this.getDefault();
+        file = '';
+        this.setState({});
+        this.context.router.push('/home');
     }
     validation() {
         if (this.state.inquirycode == "") {
@@ -128,9 +149,8 @@ export default class Add extends React.Component {
     }
     handleChange(files) {
         file = files[0];
-        debugger;
-        this.state.filename=file.name;
-        this.setState({filename:this.state.filename});
+        this.state.filename = file.name;
+        this.setState({ filename: this.state.filename });
     }
     render() {
         return (
@@ -146,6 +166,7 @@ export default class Add extends React.Component {
                                     className="width300"
                                     hintText="Enter inquiry code"
                                     errorText={this.state.inqcodeerror}
+                                    value={this.state.inquirycode}
                                     onChange={(event, newValue) => {
                                         if (newValue != "") {
                                             this.state.inqcodeerror = "";
@@ -223,6 +244,7 @@ export default class Add extends React.Component {
                                     className="width300"
                                     hintText="City"
                                     errorText={this.state.cityerror}
+                                    value={this.state.city}
                                     onChange={(event, newValue) => {
                                         if (newValue != "") {
                                             this.state.cityerror = "";
@@ -270,6 +292,7 @@ export default class Add extends React.Component {
                                     className="width300"
                                     hintText="Enter Client Name"
                                     errorText={this.state.clientnameerror}
+                                    value={this.state.clientname}
                                     onChange={(event, newValue) => {
                                         if (newValue != "") {
                                             this.state.clientnameerror = "";
@@ -290,6 +313,7 @@ export default class Add extends React.Component {
                                 <TextField
                                     className="width300"
                                     hintText="Enter Address"
+                                    value={this.state.address}
                                     errorText={this.state.addresserror}
                                     onChange={(event, newValue) => {
                                         if (newValue != "") {
@@ -311,12 +335,13 @@ export default class Add extends React.Component {
                                 <TextField
                                     className="width300"
                                     hintText="Enter Note"
+                                    value={this.state.note}
                                     onChange={(event, newValue) => this.setState({ note: newValue })}
                                     floatingLabelText="Note"
                                 />
                             </div>
                         </div>
-                        <br/>
+                        <br />
                         <div className="row">
                             <div className="col-md-12">
                                 <Dropzone onDrop={this.handleChange} className="browse">
@@ -325,14 +350,14 @@ export default class Add extends React.Component {
 
                             </div>
                         </div>
-                        <br/>
+                        <br />
                         <div className="row">
                             <div className="col-md-3">
                                 <RaisedButton label="Submit" primary={true} className={style} onClick={this.saveInquiry} />
                             </div>
                             <div className="col-md-2"></div>
                             <div className="col-md-3">
-                                <RaisedButton label="Cancel" primary={true} className={style} onClick={(event) => this.handleClick(event)} />
+                                <RaisedButton label="Cancel" primary={true} className={style} onClick={(event) => this.handleCancel(event)} />
                             </div>
 
                         </div>

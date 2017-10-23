@@ -4,10 +4,15 @@ import constants from '../constants/constants';
 import AppConstant from '../constants/AppConstants';
 import config from '../Application.config';
 import CommonFunctions from '../CommonFunctions';
+import InquiryActions from '../actions/inquiryActions';
+import LoginStore from './LoginStore';
 import $ from "jquery"
 import _ from 'underscore';
 let CHANGE_EVENT = 'change';
-
+let _inquires = [];
+function loadInquires(data){
+    _inquires=data.inquires;
+}
 var InquiryStore = _.extend({}, EventEmitter.prototype, {
     // Emit Change event
     emitChange: function () {
@@ -21,20 +26,40 @@ var InquiryStore = _.extend({}, EventEmitter.prototype, {
     removeChangeListener: function (callback) {
         this.removeListener(CHANGE_EVENT, callback);
     },
-
+    getInquiries: function () {
+        return _inquires;
+    },
     AddInquiry: function (data, callback) {
         var url = config.dev_Url + AppConstant.AddInquiryRequest;
-
         $.ajax({
             url: url,
             type: 'POST',
             data: data,
             dataType: 'json',
             processData: true,
-            headers: { "Authorization": "D18F5B97-9FC2-4355-B293-0000044B8088" },
+            headers: CommonFunctions.getHeaders(),
             success: function (data) {
                 CommonFunctions.handleResponse(data, function () {
                     callback(data);
+                });
+            },
+            error: function (xhr) {
+
+            }.bind(this)
+        });
+    },
+    GetInquiriesApiCall:function(data){
+        var url = config.dev_Url + AppConstant.GetInquiryRequest;
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+            processData: true,
+            headers: CommonFunctions.getHeaders(),
+            success: function (data) {
+                CommonFunctions.handleResponse(data, function () {
+                    InquiryActions.receiveInquiries(data);
                 });
             },
             error: function (xhr) {
@@ -51,6 +76,7 @@ var InquiryStore = _.extend({}, EventEmitter.prototype, {
             async: false,
             cache: false,
             contentType: false,
+            headers:CommonFunctions.getHeaders(),
             processData: false,
             success: function (data) {
                 CommonFunctions.handleResponse(data, function () {
@@ -66,10 +92,9 @@ var InquiryStore = _.extend({}, EventEmitter.prototype, {
 });
 AppDispatcher.register(function (payload) {
     var action = payload.action;
-
     switch (action.actionType) {
-        case constants.ADD_INQUIRY_REQ:
-
+        case constants.RECEIVE_INQUIRES_RES:
+             loadInquires(action.data);
             break;
 
         default:

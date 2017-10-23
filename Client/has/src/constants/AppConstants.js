@@ -1,5 +1,6 @@
 export default {
     LogineRequest:"LoginRequest",
     AddInquiryRequest:"AddInquiryRequest",
-    UploadQuatation:"UploadQuatation"
+    UploadQuatation:"UploadQuatation",
+    GetInquiryRequest:"GetInquiryRequest"
 };

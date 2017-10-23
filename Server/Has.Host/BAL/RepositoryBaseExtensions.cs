@@ -128,6 +128,68 @@ namespace BAL
             }
             return entityID;
         }
+        public static bool InsertOrUpdate<T>(this RepositoryBase<T> repository, T entity, string sprocName)
+        {
+            int isSuccess;
+            try
+            {
+                Stopwatch sw = Stopwatch.StartNew();
+                IDbCommand command = new SqlCommand().GetCommandWithParameters(entity, sprocName);
+                SqlConnection conn = DBConnectionHelper.OpenNewSqlConnection(repository.ConnectionString);
+                command.Connection = conn;
+                isSuccess = command.ExecuteNonQuery();
+                DBConnectionHelper.CloseSqlConnection(conn);
+                sw.Stop();
+                return isSuccess > 0;
+            }
+            catch (SqlException ex)
+            {
+                throw;
+            }
+        }
+
+        public static bool InsertOrUpdate<T>(this RepositoryBase<T> repository, Dictionary<string, object> dictionary, string sprocName)
+        {
+            int isSuccess;
+            try
+            {
+                Stopwatch sw = Stopwatch.StartNew();
+                IDbCommand command = new SqlCommand().GetCommandWithParameters(dictionary, sprocName);
+                SqlConnection conn = DBConnectionHelper.OpenNewSqlConnection(repository.ConnectionString);
+                command.Connection = conn;
+                isSuccess = command.ExecuteNonQuery();
+                DBConnectionHelper.CloseSqlConnection(conn);
+                sw.Stop();
+                return isSuccess > 0;
+            }
+            catch (SqlException ex)
+            {
+                throw;
+            }
+        }
+
+
+        public static DataSet GetEntityDataSet<T1>(this RepositoryBase<T1> repository, Dictionary<string, object> sprocParametersList, string sprocName)
+        {
+            try
+            {
+                Stopwatch sw = Stopwatch.StartNew();
+                DataSet dataSet = new DataSet();
+                SqlDataAdapter dataAdapter = new SqlDataAdapter();
+                IDbCommand command = new SqlCommand().GetCommandWithParameters(sprocParametersList, sprocName);
+                SqlConnection conn = DBConnectionHelper.OpenNewSqlConnection(repository.ConnectionString);
+                command.Connection = conn;
+                dataAdapter.SelectCommand = (SqlCommand)command;
+                dataAdapter.Fill(dataSet);
+                DBConnectionHelper.CloseSqlConnection(conn);
+                return dataSet;
+            }
+            catch (SqlException ex)
+            {
+                throw;
+            }
+        }
+
 
     }
 }
